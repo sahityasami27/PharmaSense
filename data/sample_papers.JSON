@@ -1,0 +1,17 @@
+[
+    {
+      "id": "paper_1",
+      "title": "Aspirin and Neuroinflammation",
+      "abstract": "Aspirin has demonstrated anti-inflammatory effects in neurodegenerative disorders by reducing cytokine activity and oxidative stress."
+    },
+    {
+      "id": "paper_2",
+      "title": "Ibuprofen Mechanisms",
+      "abstract": "Ibuprofen inhibits COX enzymes and reduces inflammatory signaling pathways associated with chronic pain."
+    },
+    {
+      "id": "paper_3",
+      "title": "Microglia Activation in Alzheimer's",
+      "abstract": "Activated microglia contribute significantly to neuroinflammation in Alzheimer's disease progression."
+    }
+  ]
