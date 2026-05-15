@@ -18,15 +18,29 @@ embedding_model = SentenceTransformer(
 )
 
 
-# Load Real PubMed Data Into ChromaDB
-def load_data():
+# Dynamically Ingest Papers Based On User Query
+def ingest_query_papers(query, max_results=10):
 
     papers = fetch_pubmed(
-        query="neuroinflammation",
-        max_results=20
+        query=query,
+        max_results=max_results
     )
 
+    existing = collection.get()
+
+    existing_ids = set(existing["ids"])
+
+    added_count = 0
+
     for paper in papers:
+
+        # Skip duplicate papers
+        if paper["id"] in existing_ids:
+            continue
+
+        # Skip empty abstracts
+        if not paper["abstract"]:
+            continue
 
         embedding = embedding_model.encode(
             paper["abstract"]
@@ -41,11 +55,16 @@ def load_data():
             embeddings=[embedding]
         )
 
-    print("Documents added to ChromaDB")
+        added_count += 1
+
+    print(f"Ingested {added_count} new papers.")
 
 
 # Retrieve Relevant Documents
 def retrieve_documents(query, top_k=3):
+
+    # Fetch + Store Latest Relevant Papers
+    ingest_query_papers(query)
 
     query_embedding = embedding_model.encode(
         query
@@ -57,6 +76,7 @@ def retrieve_documents(query, top_k=3):
     )
 
     documents = results["documents"][0]
+
     metadatas = results["metadatas"][0]
 
     retrieved = []
@@ -71,12 +91,10 @@ def retrieve_documents(query, top_k=3):
     return retrieved
 
 
-# Run Directly
+# Direct Testing
 if __name__ == "__main__":
 
-    load_data()
-
-    query = "neuroinflammation treatment"
+    query = "aspirin neuroinflammation"
 
     results = retrieve_documents(query)
 

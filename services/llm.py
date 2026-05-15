@@ -3,7 +3,15 @@ import os
 
 from langchain_groq import ChatGroq
 
+# LangSmith
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_PROJECT"] = "PharmaSense"
+
 load_dotenv()
+
+os.environ["LANGCHAIN_API_KEY"] = os.getenv(
+    "LANGCHAIN_API_KEY"
+)
 
 llm = ChatGroq(
     model="llama-3.3-70b-versatile",
