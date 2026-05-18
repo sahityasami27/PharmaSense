@@ -4,6 +4,13 @@
 
 ---
 
+## Demo
+
+Frontend: <https://pharma-sense-swart.vercel.app/>
+
+Backend API Docs:
+http://127.0.0.1:8000/docs
+
 ## Overview
 
 PharmaSense is a full-stack Agentic GenAI system designed to automate biomedical literature analysis using:
